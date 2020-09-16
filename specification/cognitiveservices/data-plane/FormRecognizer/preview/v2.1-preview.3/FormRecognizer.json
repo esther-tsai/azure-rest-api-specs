@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2.1-preview.2",
+    "version": "2.1-preview.3",
     "title": "Form Recognizer Client",
     "description": "Extracts information from forms and images into structured data."
   },
@@ -18,7 +18,7 @@
     }
   ],
   "x-ms-parameterized-host": {
-    "hostTemplate": "{endpoint}/formrecognizer/v2.1-preview.2",
+    "hostTemplate": "{endpoint}/formrecognizer/v2.1-preview.3",
     "useSchemePrefix": false,
     "parameters": [
       {
@@ -758,6 +758,100 @@
         "x-ms-examples": {
           "Get analyze receipt result": {
             "$ref": "./examples/InvoicesBatchResult.json"
+          }
+        }
+      }
+    },
+    "/prebuilt/id/analyze": {
+      "post": {
+        "summary": "Analyze ID",
+        "description": "Extract field text and semantic values from a given ID document. The input document must be of one of the supported content types - 'application/pdf', 'image/jpeg', 'image/png' or 'image/tiff'. Alternatively, use 'application/json' type to specify the location (Uri) of the document to be analyzed.",
+        "operationId": "AnalyzeIdAsync",
+        "consumes": [
+          "application/pdf",
+          "application/json",
+          "image/jpeg",
+          "image/png",
+          "image/tiff"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "includeTextDetails",
+            "in": "query",
+            "description": "Include text lines and element references in the result.",
+            "required": false,
+            "default": false,
+            "type": "boolean",
+            "x-nullable": false
+          },
+          {
+            "$ref": "#/parameters/FileStream"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request is queued successfully.",
+            "headers": {
+              "Operation-Location": {
+                "type": "string",
+                "description": "URL containing the resultId used to track the progress and obtain the result of the analyze operation."
+              }
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Analyze Id": {
+            "$ref": "./examples/IdsBatch.json"
+          }
+        },
+        "x-ms-long-running-operation": true
+      }
+    },
+    "/prebuilt/id/analyzeResults/{resultId}": {
+      "get": {
+        "summary": "Get Analyze ID Result",
+        "description": "Track the progress and obtain the result of the analyze ID operation.",
+        "operationId": "GetAnalyzeIdResult",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "resultId",
+            "in": "path",
+            "description": "Analyze operation result identifier.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AnalyzeOperationResult"
+            }
+          },
+          "default": {
+            "description": "Response entity accompanying non-successful responses containing additional details about the error.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Get analyze id result": {
+            "$ref": "./examples/IdsBatchResult.json"
           }
         }
       }
