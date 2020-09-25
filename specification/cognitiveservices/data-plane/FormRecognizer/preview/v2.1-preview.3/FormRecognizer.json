@@ -762,7 +762,7 @@
         }
       }
     },
-    "/prebuilt/id/analyze": {
+    "/prebuilt/idDocument/analyze": {
       "post": {
         "summary": "Analyze ID",
         "description": "Extract field text and semantic values from a given ID document. The input document must be of one of the supported content types - 'application/pdf', 'image/jpeg', 'image/png' or 'image/tiff'. Alternatively, use 'application/json' type to specify the location (Uri) of the document to be analyzed.",
@@ -816,7 +816,7 @@
         "x-ms-long-running-operation": true
       }
     },
-    "/prebuilt/id/analyzeResults/{resultId}": {
+    "/prebuilt/idDocument/analyzeResults/{resultId}": {
       "get": {
         "summary": "Get Analyze ID Result",
         "description": "Track the progress and obtain the result of the analyze ID operation.",
