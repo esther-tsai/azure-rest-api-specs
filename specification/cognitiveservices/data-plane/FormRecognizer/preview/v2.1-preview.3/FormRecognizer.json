@@ -788,6 +788,13 @@
             "x-nullable": false
           },
           {
+            "name": "locale",
+            "in": "query",
+            "description": "Locale of the ID document. Supported locales include: en-US(default).",
+            "required": false,
+            "type": "string"
+          },
+          {
             "$ref": "#/parameters/FileStream"
           }
         ],
